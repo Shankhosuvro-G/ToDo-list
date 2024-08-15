@@ -27,12 +27,6 @@ This is a simple To-Do List application built using Flask, Flask-RESTful, and SQ
     cd your-repository
     ```
 
-2. **Create a virtual environment:**
-
-    ```bash
-    python -m venv venv
-    ```
-
 2. **Install the required packages:**
 
     ```bash
