@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>My ToDo List</h1>
+
+    <!-- Form to add a new task -->
+    <form action="{{ url_for('add_task') }}" method="POST">
+        <input type="text" name="task" placeholder="Enter task" required>
+        <input type="text" name="summary" placeholder="Enter summary" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task.task }}:</strong> {{ task.summary }}
+
+                <!-- Update form -->
+                <form action="{{ url_for('update_task', id=task.id) }}" method="POST" style="display:inline;">
+                    <input type="text" name="task" value="{{ task.task }}" required>
+                    <input type="text" name="summary" value="{{ task.summary }}" required>
+                    <button type="submit">Update</button>
+                </form>
+
+                <!-- Delete form -->
+                <form action="{{ url_for('delete_task', id=task.id) }}" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
