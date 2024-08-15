@@ -3,20 +3,35 @@ body {
     margin: 0;
     padding: 20px;
     background-color: #f4f4f4;
+    background-image: url("Black\ Minimalist\ Clock\ and\ Calendar\ Desktop\ Wallpaper\ \(1\).png");
+    background-size:cover;
+    background-repeat: no-repeat;
+    
 }
 
 h1 {
     color: #333;
+    text-align: center;
+    font-family: Georgia, serif;
+    font-weight:900;
+    font-size:6ch;
+    color: #ddd;
+    
+    
+
 }
 
 form {
+    display: flex;
     margin-bottom: 20px;
+    justify-content: center;
 }
 
 input[type="text"] {
     padding: 10px;
     width: 300px;
     margin-right: 10px;
+    border-radius: 15px;
 }
 
 button {
@@ -25,7 +40,27 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 15px;
 }
+#addtask{
+    padding: 10px 20px;
+    background-color: #1abc27;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 15px;
+}
+#addtask:hover{
+    background-color: #2a8532;
+}
+#del{
+    background-color: #cd1515;
+    border-radius: 15px;
+}
+#del:hover{
+    background-color: #841515;
+}
+
 
 button:hover {
     background-color: #0056b3;
@@ -37,8 +72,26 @@ ul {
 }
 
 li {
-    background-color: #fff;
+    /* background-color: #fff; */
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
+    /* display: flex; */
+    justify-content: center;
+    /* border: 1px solid #ddd;  */
+}
+strong{
+    color: #ddd;
+}
+legend{
+    color: #000000;
+    font-size: 3ch;
+    font-family: Georgia, serif;
+    text-align: center;
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+fieldset{
+    border-radius: 15px;
 }

@@ -13,28 +13,31 @@
     <form action="{{ url_for('add_task') }}" method="POST">
         <input type="text" name="task" placeholder="Enter task" required>
         <input type="text" name="summary" placeholder="Enter summary" required>
-        <button type="submit">Add Task</button>
+        <button id="addtask" type="submit">Add Task</button>
     </form>
-
+<fieldset>
+    <legend>My Tasks</legend>
     <ul>
         {% for task in tasks %}
             <li>
-                <strong>{{ task.task }}:</strong> {{ task.summary }}
+                <strong>{{ task.task }}:</strong> 
+                <!-- {{ task.summary }} -->
 
                 <!-- Update form -->
                 <form action="{{ url_for('update_task', id=task.id) }}" method="POST" style="display:inline;">
-                    <input type="text" name="task" value="{{ task.task }}" required>
-                    <input type="text" name="summary" value="{{ task.summary }}" required>
-                    <button type="submit">Update</button>
+                    <input type="text" name="task" placeholder="Task" value="{{ task.task }}" required >
+                    <input type="text" name="summary" placeholder="Task Summary "  value="{{ task.summary }}" required>
+                    <button id="update" type="submit">Update</button>
                 </form>
 
                 <!-- Delete form -->
                 <form action="{{ url_for('delete_task', id=task.id) }}" method="POST" style="display:inline;">
-                    <button type="submit">Delete</button>
+                    <button id="del" type="submit">Delete</button>
                 </form>
             </li>
         {% endfor %}
     </ul>
+</fieldset>
 
 </body>
 </html>
