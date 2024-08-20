@@ -6,6 +6,7 @@ This is a simple To-Do List application built using Flask, Flask-RESTful, and SQ
 
 ## Features
 
+- **Session id**: Each instance will have a unique session id.
 - **Add Tasks**: Add new tasks with a description and summary.
 - **Update Tasks**: Update existing tasks.
 - **Delete Tasks**: Remove tasks from the list.
