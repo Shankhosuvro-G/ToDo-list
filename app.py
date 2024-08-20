@@ -20,7 +20,7 @@ class ToDoModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task = db.Column(db.String(200))
     summary = db.Column(db.String(500))
-    session_id = db.Column(db.string(200))
+    session_id = db.Column(db.String(200))
 
 with app.app_context():
     db.create_all()
