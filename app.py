@@ -1,16 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for,session
 from flask_restful import Resource, Api, reqparse, abort, fields, marshal_with
 from flask_sqlalchemy import SQLAlchemy
+import uuid
+import os
 
 app = Flask(__name__)
 api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sqlite.db'
+app.config['SECRET_KEY']=os.urandom(24)
 db = SQLAlchemy(app)
+
+# Generate unique session id for each user
+@app.before_request
+def before_request():
+    if 'session_id' not in session:
+        session['session_id']=str(uuid.uuid4())
 
 class ToDoModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     task = db.Column(db.String(200))
     summary = db.Column(db.String(500))
+    session_id = db.Column(db.string(200))
 
 with app.app_context():
     db.create_all()
@@ -32,7 +42,7 @@ task_update_args.add_argument("summary", type=str)
 # Home route to render the main page
 @app.route('/')
 def index():
-    tasks = ToDoModel.query.all()
+    tasks = ToDoModel.query.filter_by(session_id=session['session_id']).all()
     return render_template('index.html', tasks=tasks)
 
 # To handle the form submission for adding a new task
@@ -40,7 +50,7 @@ def index():
 def add_task():
     task_content = request.form['task']
     task_summary = request.form['summary']
-    new_task = ToDoModel(task=task_content, summary=task_summary)
+    new_task = ToDoModel(task=task_content, summary=task_summary, session_id=session['session_id'])
     db.session.add(new_task)
     db.session.commit()
     return redirect(url_for('index'))
@@ -48,7 +58,7 @@ def add_task():
 # To handle the form submission for updating an existing task
 @app.route('/update/<int:id>', methods=['POST'])
 def update_task(id):
-    task = ToDoModel.query.get_or_404(id)
+    task = ToDoModel.query.filter_by(id=id, session_id=session['session_id']).get_or_404(id)
     task.task = request.form['task']
     task.summary = request.form['summary']
     db.session.commit()
@@ -57,7 +67,7 @@ def update_task(id):
 # To handle the deletion of a task
 @app.route('/delete/<int:id>', methods=['POST'])
 def delete_task(id):
-    task = ToDoModel.query.get_or_404(id)
+    task = ToDoModel.query.filter_by(id=id, session_id=session['session_id']).get_or_404(id)
     db.session.delete(task)
     db.session.commit()
     return redirect(url_for('index'))
